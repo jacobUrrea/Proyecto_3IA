@@ -151,37 +151,6 @@ class RedBayesiana:
                 print(df.to_string(index=False))
             print("---")
 
-    def validar_red(self):
-        errores = []
-        advertencias = []
-
-        # Verificar que todas las variables tengan CPT
-        for variable in self.variables:
-            if variable not in self.cpts:
-                errores.append(f"Variable {variable} no tiene CPT")
-
-        # Verificar que no hay ciclos
-        if not nx.is_directed_acyclic_graph(self.grafo):
-            errores.append("La red contiene ciclos (no es acíclica)")
-
-        # Mostrar resultados
-        if errores:
-            print("Errores encontrados:")
-            for error in errores:
-                print(f"  - {error}")
-        else:
-            print("No se encontraron errores críticos")
-
-        return len(errores) == 0
-
-    def listar_variables(self):
-        print("Variables disponibles para consultas:")
-        for variable in sorted(self.variables):
-            padres = list(self.grafo.predecessors(variable))
-            if padres:
-                print(f"  🩺 {variable} (depende de: {', '.join(padres)})")
-            else:
-                print(f"  🩺 {variable} (variable base)")
 if __name__ == "__main__":
 
     # Crear instancia de la red bayesiana
@@ -228,7 +197,5 @@ if __name__ == "__main__":
     print("\n Visualizando la red de diagnóstico...")
     rb.mostrar_grafo()
     rb.mostrar_cpts()
-    rb.validar_red()
-    rb.listar_variables()
 
 
