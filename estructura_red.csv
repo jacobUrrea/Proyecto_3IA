@@ -1,0 +1,11 @@
+padre,hijo
+Edad,PresionArterial
+Edad,Colesterol
+Fumador,PresionArterial
+Fumador,Colesterol
+Fumador,EnfermedadCardiaca
+Ejercicio,PresionArterial
+Ejercicio,Colesterol
+Ejercicio,EnfermedadCardiaca
+PresionArterial,EnfermedadCardiaca
+Colesterol,EnfermedadCardiaca
