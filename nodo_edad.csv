@@ -1,4 +1,4 @@
-valor,probabilidad
-joven,0.4
-adulto,0.35
-mayor,0.25
+edad,probabilidad
+joven,0.33
+adulto,0.34
+mayor,0.33

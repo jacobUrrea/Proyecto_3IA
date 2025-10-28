@@ -1,0 +1,67 @@
+Traza de inferencia por enumeracion 
+Consulta: P(EnfermedadCardiaca | {'Edad': 'adulto', 'Fumador': 'si', 'Ejercicio': 'poco'})
+1. Variables de la red: ['Fumador', 'EnfermedadCardiaca', 'Ejercicio', 'Colesterol', 'Edad', 'PresionArterial']
+2. Variables ocultas (Y): ['Colesterol', 'PresionArterial']
+Consulta (X): EnfermedadCardiaca
+Evidencia (e): {'Edad': 'adulto', 'Fumador': 'si', 'Ejercicio': 'poco'}
+3. Valores posibles de EnfermedadCardiaca: ['alto_riesgo', 'medio_riesgo', 'bajo_riesgo']
+
+ 4.Calculo de probabilidades conjuntas:
+Formula: P(EnfermedadCardiaca, {'Edad': 'adulto', 'Fumador': 'si', 'Ejercicio': 'poco'}, ['Colesterol', 'PresionArterial'])
+
+ Calculo para EnfermedadCardiaca = alto_riesgo ---
+Combinacion 1: {'Edad': 'adulto', 'Fumador': 'si', 'Ejercicio': 'poco', 'EnfermedadCardiaca': 'alto_riesgo', 'Colesterol': 'alto', 'PresionArterial': 'alta'}
+P(Fumador=si|{'Edad': 'adulto'})=0.3500 × P(EnfermedadCardiaca=alto_riesgo|{'Fumador': 'si', 'Ejercicio': 'poco', 'PresionArterial': 'alta', 'Colesterol': 'alto'})=0.9000 × P(Ejercicio=poco|{'Edad': 'adulto'})=0.4000 × P(Colesterol=alto|{'Edad': 'adulto', 'Fumador': 'si', 'Ejercicio': 'poco'})=0.5000 × P(Edad=adulto)=0.3400 × P(PresionArterial=alta|{'Edad': 'adulto', 'Fumador': 'si', 'Ejercicio': 'poco'})=0.5000 = 0.010710
+Combinacion 2: {'Edad': 'adulto', 'Fumador': 'si', 'Ejercicio': 'poco', 'EnfermedadCardiaca': 'alto_riesgo', 'Colesterol': 'alto', 'PresionArterial': 'media'}
+P(Fumador=si|{'Edad': 'adulto'})=0.3500 × P(EnfermedadCardiaca=alto_riesgo|{'Fumador': 'si', 'Ejercicio': 'poco', 'PresionArterial': 'media', 'Colesterol': 'alto'})=0.6000 × P(Ejercicio=poco|{'Edad': 'adulto'})=0.4000 × P(Colesterol=alto|{'Edad': 'adulto', 'Fumador': 'si', 'Ejercicio': 'poco'})=0.5000 × P(Edad=adulto)=0.3400 × P(PresionArterial=media|{'Edad': 'adulto', 'Fumador': 'si', 'Ejercicio': 'poco'})=0.3000 = 0.004284
+Combinacion 3: {'Edad': 'adulto', 'Fumador': 'si', 'Ejercicio': 'poco', 'EnfermedadCardiaca': 'alto_riesgo', 'Colesterol': 'alto', 'PresionArterial': 'baja'}
+P(Fumador=si|{'Edad': 'adulto'})=0.3500 × P(EnfermedadCardiaca=alto_riesgo|{'Fumador': 'si', 'Ejercicio': 'poco', 'PresionArterial': 'baja', 'Colesterol': 'alto'})=0.3000 × P(Ejercicio=poco|{'Edad': 'adulto'})=0.4000 × P(Colesterol=alto|{'Edad': 'adulto', 'Fumador': 'si', 'Ejercicio': 'poco'})=0.5000 × P(Edad=adulto)=0.3400 × P(PresionArterial=baja|{'Edad': 'adulto', 'Fumador': 'si', 'Ejercicio': 'poco'})=0.2000 = 0.001428
+Combinacion 4: {'Edad': 'adulto', 'Fumador': 'si', 'Ejercicio': 'poco', 'EnfermedadCardiaca': 'alto_riesgo', 'Colesterol': 'normal', 'PresionArterial': 'alta'}
+P(Fumador=si|{'Edad': 'adulto'})=0.3500 × P(EnfermedadCardiaca=alto_riesgo|{'Fumador': 'si', 'Ejercicio': 'poco', 'PresionArterial': 'alta', 'Colesterol': 'normal'})=0.7000 × P(Ejercicio=poco|{'Edad': 'adulto'})=0.4000 × P(Colesterol=normal|{'Edad': 'adulto', 'Fumador': 'si', 'Ejercicio': 'poco'})=0.5000 × P(Edad=adulto)=0.3400 × P(PresionArterial=alta|{'Edad': 'adulto', 'Fumador': 'si', 'Ejercicio': 'poco'})=0.5000 = 0.008330
+Combinacion 5: {'Edad': 'adulto', 'Fumador': 'si', 'Ejercicio': 'poco', 'EnfermedadCardiaca': 'alto_riesgo', 'Colesterol': 'normal', 'PresionArterial': 'media'}
+P(Fumador=si|{'Edad': 'adulto'})=0.3500 × P(EnfermedadCardiaca=alto_riesgo|{'Fumador': 'si', 'Ejercicio': 'poco', 'PresionArterial': 'media', 'Colesterol': 'normal'})=0.4000 × P(Ejercicio=poco|{'Edad': 'adulto'})=0.4000 × P(Colesterol=normal|{'Edad': 'adulto', 'Fumador': 'si', 'Ejercicio': 'poco'})=0.5000 × P(Edad=adulto)=0.3400 × P(PresionArterial=media|{'Edad': 'adulto', 'Fumador': 'si', 'Ejercicio': 'poco'})=0.3000 = 0.002856
+Combinacion 6: {'Edad': 'adulto', 'Fumador': 'si', 'Ejercicio': 'poco', 'EnfermedadCardiaca': 'alto_riesgo', 'Colesterol': 'normal', 'PresionArterial': 'baja'}
+P(Fumador=si|{'Edad': 'adulto'})=0.3500 × P(EnfermedadCardiaca=alto_riesgo|{'Fumador': 'si', 'Ejercicio': 'poco', 'PresionArterial': 'baja', 'Colesterol': 'normal'})=0.2000 × P(Ejercicio=poco|{'Edad': 'adulto'})=0.4000 × P(Colesterol=normal|{'Edad': 'adulto', 'Fumador': 'si', 'Ejercicio': 'poco'})=0.5000 × P(Edad=adulto)=0.3400 × P(PresionArterial=baja|{'Edad': 'adulto', 'Fumador': 'si', 'Ejercicio': 'poco'})=0.2000 = 0.000952
+Suma para EnfermedadCardiaca=alto_riesgo: 0.028560
+Combinaciones validas: 6
+
+ Calculo para EnfermedadCardiaca = medio_riesgo ---
+Combinacion 1: {'Edad': 'adulto', 'Fumador': 'si', 'Ejercicio': 'poco', 'EnfermedadCardiaca': 'medio_riesgo', 'Colesterol': 'alto', 'PresionArterial': 'alta'}
+P(Fumador=si|{'Edad': 'adulto'})=0.3500 × P(EnfermedadCardiaca=medio_riesgo|{'Fumador': 'si', 'Ejercicio': 'poco', 'PresionArterial': 'alta', 'Colesterol': 'alto'})=0.0800 × P(Ejercicio=poco|{'Edad': 'adulto'})=0.4000 × P(Colesterol=alto|{'Edad': 'adulto', 'Fumador': 'si', 'Ejercicio': 'poco'})=0.5000 × P(Edad=adulto)=0.3400 × P(PresionArterial=alta|{'Edad': 'adulto', 'Fumador': 'si', 'Ejercicio': 'poco'})=0.5000 = 0.000952
+Combinacion 2: {'Edad': 'adulto', 'Fumador': 'si', 'Ejercicio': 'poco', 'EnfermedadCardiaca': 'medio_riesgo', 'Colesterol': 'alto', 'PresionArterial': 'media'}
+P(Fumador=si|{'Edad': 'adulto'})=0.3500 × P(EnfermedadCardiaca=medio_riesgo|{'Fumador': 'si', 'Ejercicio': 'poco', 'PresionArterial': 'media', 'Colesterol': 'alto'})=0.3000 × P(Ejercicio=poco|{'Edad': 'adulto'})=0.4000 × P(Colesterol=alto|{'Edad': 'adulto', 'Fumador': 'si', 'Ejercicio': 'poco'})=0.5000 × P(Edad=adulto)=0.3400 × P(PresionArterial=media|{'Edad': 'adulto', 'Fumador': 'si', 'Ejercicio': 'poco'})=0.3000 = 0.002142
+Combinacion 3: {'Edad': 'adulto', 'Fumador': 'si', 'Ejercicio': 'poco', 'EnfermedadCardiaca': 'medio_riesgo', 'Colesterol': 'alto', 'PresionArterial': 'baja'}
+P(Fumador=si|{'Edad': 'adulto'})=0.3500 × P(EnfermedadCardiaca=medio_riesgo|{'Fumador': 'si', 'Ejercicio': 'poco', 'PresionArterial': 'baja', 'Colesterol': 'alto'})=0.4000 × P(Ejercicio=poco|{'Edad': 'adulto'})=0.4000 × P(Colesterol=alto|{'Edad': 'adulto', 'Fumador': 'si', 'Ejercicio': 'poco'})=0.5000 × P(Edad=adulto)=0.3400 × P(PresionArterial=baja|{'Edad': 'adulto', 'Fumador': 'si', 'Ejercicio': 'poco'})=0.2000 = 0.001904
+Combinacion 4: {'Edad': 'adulto', 'Fumador': 'si', 'Ejercicio': 'poco', 'EnfermedadCardiaca': 'medio_riesgo', 'Colesterol': 'normal', 'PresionArterial': 'alta'}
+P(Fumador=si|{'Edad': 'adulto'})=0.3500 × P(EnfermedadCardiaca=medio_riesgo|{'Fumador': 'si', 'Ejercicio': 'poco', 'PresionArterial': 'alta', 'Colesterol': 'normal'})=0.2500 × P(Ejercicio=poco|{'Edad': 'adulto'})=0.4000 × P(Colesterol=normal|{'Edad': 'adulto', 'Fumador': 'si', 'Ejercicio': 'poco'})=0.5000 × P(Edad=adulto)=0.3400 × P(PresionArterial=alta|{'Edad': 'adulto', 'Fumador': 'si', 'Ejercicio': 'poco'})=0.5000 = 0.002975
+Combinacion 5: {'Edad': 'adulto', 'Fumador': 'si', 'Ejercicio': 'poco', 'EnfermedadCardiaca': 'medio_riesgo', 'Colesterol': 'normal', 'PresionArterial': 'media'}
+P(Fumador=si|{'Edad': 'adulto'})=0.3500 × P(EnfermedadCardiaca=medio_riesgo|{'Fumador': 'si', 'Ejercicio': 'poco', 'PresionArterial': 'media', 'Colesterol': 'normal'})=0.4000 × P(Ejercicio=poco|{'Edad': 'adulto'})=0.4000 × P(Colesterol=normal|{'Edad': 'adulto', 'Fumador': 'si', 'Ejercicio': 'poco'})=0.5000 × P(Edad=adulto)=0.3400 × P(PresionArterial=media|{'Edad': 'adulto', 'Fumador': 'si', 'Ejercicio': 'poco'})=0.3000 = 0.002856
+Combinacion 6: {'Edad': 'adulto', 'Fumador': 'si', 'Ejercicio': 'poco', 'EnfermedadCardiaca': 'medio_riesgo', 'Colesterol': 'normal', 'PresionArterial': 'baja'}
+P(Fumador=si|{'Edad': 'adulto'})=0.3500 × P(EnfermedadCardiaca=medio_riesgo|{'Fumador': 'si', 'Ejercicio': 'poco', 'PresionArterial': 'baja', 'Colesterol': 'normal'})=0.3000 × P(Ejercicio=poco|{'Edad': 'adulto'})=0.4000 × P(Colesterol=normal|{'Edad': 'adulto', 'Fumador': 'si', 'Ejercicio': 'poco'})=0.5000 × P(Edad=adulto)=0.3400 × P(PresionArterial=baja|{'Edad': 'adulto', 'Fumador': 'si', 'Ejercicio': 'poco'})=0.2000 = 0.001428
+Suma para EnfermedadCardiaca=medio_riesgo: 0.012257
+Combinaciones validas: 6
+
+ Calculo para EnfermedadCardiaca = bajo_riesgo ---
+Combinacion 1: {'Edad': 'adulto', 'Fumador': 'si', 'Ejercicio': 'poco', 'EnfermedadCardiaca': 'bajo_riesgo', 'Colesterol': 'alto', 'PresionArterial': 'alta'}
+P(Fumador=si|{'Edad': 'adulto'})=0.3500 × P(EnfermedadCardiaca=bajo_riesgo|{'Fumador': 'si', 'Ejercicio': 'poco', 'PresionArterial': 'alta', 'Colesterol': 'alto'})=0.0200 × P(Ejercicio=poco|{'Edad': 'adulto'})=0.4000 × P(Colesterol=alto|{'Edad': 'adulto', 'Fumador': 'si', 'Ejercicio': 'poco'})=0.5000 × P(Edad=adulto)=0.3400 × P(PresionArterial=alta|{'Edad': 'adulto', 'Fumador': 'si', 'Ejercicio': 'poco'})=0.5000 = 0.000238
+Combinacion 2: {'Edad': 'adulto', 'Fumador': 'si', 'Ejercicio': 'poco', 'EnfermedadCardiaca': 'bajo_riesgo', 'Colesterol': 'alto', 'PresionArterial': 'media'}
+P(Fumador=si|{'Edad': 'adulto'})=0.3500 × P(EnfermedadCardiaca=bajo_riesgo|{'Fumador': 'si', 'Ejercicio': 'poco', 'PresionArterial': 'media', 'Colesterol': 'alto'})=0.1000 × P(Ejercicio=poco|{'Edad': 'adulto'})=0.4000 × P(Colesterol=alto|{'Edad': 'adulto', 'Fumador': 'si', 'Ejercicio': 'poco'})=0.5000 × P(Edad=adulto)=0.3400 × P(PresionArterial=media|{'Edad': 'adulto', 'Fumador': 'si', 'Ejercicio': 'poco'})=0.3000 = 0.000714
+Combinacion 3: {'Edad': 'adulto', 'Fumador': 'si', 'Ejercicio': 'poco', 'EnfermedadCardiaca': 'bajo_riesgo', 'Colesterol': 'alto', 'PresionArterial': 'baja'}
+P(Fumador=si|{'Edad': 'adulto'})=0.3500 × P(EnfermedadCardiaca=bajo_riesgo|{'Fumador': 'si', 'Ejercicio': 'poco', 'PresionArterial': 'baja', 'Colesterol': 'alto'})=0.3000 × P(Ejercicio=poco|{'Edad': 'adulto'})=0.4000 × P(Colesterol=alto|{'Edad': 'adulto', 'Fumador': 'si', 'Ejercicio': 'poco'})=0.5000 × P(Edad=adulto)=0.3400 × P(PresionArterial=baja|{'Edad': 'adulto', 'Fumador': 'si', 'Ejercicio': 'poco'})=0.2000 = 0.001428
+Combinacion 4: {'Edad': 'adulto', 'Fumador': 'si', 'Ejercicio': 'poco', 'EnfermedadCardiaca': 'bajo_riesgo', 'Colesterol': 'normal', 'PresionArterial': 'alta'}
+P(Fumador=si|{'Edad': 'adulto'})=0.3500 × P(EnfermedadCardiaca=bajo_riesgo|{'Fumador': 'si', 'Ejercicio': 'poco', 'PresionArterial': 'alta', 'Colesterol': 'normal'})=0.0500 × P(Ejercicio=poco|{'Edad': 'adulto'})=0.4000 × P(Colesterol=normal|{'Edad': 'adulto', 'Fumador': 'si', 'Ejercicio': 'poco'})=0.5000 × P(Edad=adulto)=0.3400 × P(PresionArterial=alta|{'Edad': 'adulto', 'Fumador': 'si', 'Ejercicio': 'poco'})=0.5000 = 0.000595
+Combinacion 5: {'Edad': 'adulto', 'Fumador': 'si', 'Ejercicio': 'poco', 'EnfermedadCardiaca': 'bajo_riesgo', 'Colesterol': 'normal', 'PresionArterial': 'media'}
+P(Fumador=si|{'Edad': 'adulto'})=0.3500 × P(EnfermedadCardiaca=bajo_riesgo|{'Fumador': 'si', 'Ejercicio': 'poco', 'PresionArterial': 'media', 'Colesterol': 'normal'})=0.2000 × P(Ejercicio=poco|{'Edad': 'adulto'})=0.4000 × P(Colesterol=normal|{'Edad': 'adulto', 'Fumador': 'si', 'Ejercicio': 'poco'})=0.5000 × P(Edad=adulto)=0.3400 × P(PresionArterial=media|{'Edad': 'adulto', 'Fumador': 'si', 'Ejercicio': 'poco'})=0.3000 = 0.001428
+Combinacion 6: {'Edad': 'adulto', 'Fumador': 'si', 'Ejercicio': 'poco', 'EnfermedadCardiaca': 'bajo_riesgo', 'Colesterol': 'normal', 'PresionArterial': 'baja'}
+P(Fumador=si|{'Edad': 'adulto'})=0.3500 × P(EnfermedadCardiaca=bajo_riesgo|{'Fumador': 'si', 'Ejercicio': 'poco', 'PresionArterial': 'baja', 'Colesterol': 'normal'})=0.5000 × P(Ejercicio=poco|{'Edad': 'adulto'})=0.4000 × P(Colesterol=normal|{'Edad': 'adulto', 'Fumador': 'si', 'Ejercicio': 'poco'})=0.5000 × P(Edad=adulto)=0.3400 × P(PresionArterial=baja|{'Edad': 'adulto', 'Fumador': 'si', 'Ejercicio': 'poco'})=0.2000 = 0.002380
+Suma para EnfermedadCardiaca=bajo_riesgo: 0.006783
+Combinaciones validas: 6
+
+5Normalizacion:
+Suma total de probabilidades conjuntas: 0.047600
+Factor de normalizacion alpha = 1/0.047600 = 21.008403
+P(EnfermedadCardiaca=alto_riesgo|evidencia) = 0.028560 × 21.008403 = 0.600000
+P(EnfermedadCardiaca=medio_riesgo|evidencia) = 0.012257 × 21.008403 = 0.257500
+P(EnfermedadCardiaca=bajo_riesgo|evidencia) = 0.006783 × 21.008403 = 0.142500
+Resultado final:
+P(EnfermedadCardiaca | {'Edad': 'adulto', 'Fumador': 'si', 'Ejercicio': 'poco'}) = {'alto_riesgo': np.float64(0.6000000000000001), 'medio_riesgo': np.float64(0.2575), 'bajo_riesgo': np.float64(0.1425)}

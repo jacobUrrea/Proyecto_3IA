@@ -1,4 +1,10 @@
-valor,probabilidad
-poco,0.5
-moderado,0.3
-mucho,0.2
+Edad,ejercicio,probabilidad
+joven,poco,0.2
+joven,moderado,0.5
+joven,intenso,0.3
+adulto,poco,0.4
+adulto,moderado,0.4
+adulto,intenso,0.2
+mayor,poco,0.6
+mayor,moderado,0.3
+mayor,intenso,0.1
