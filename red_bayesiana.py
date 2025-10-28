@@ -123,10 +123,10 @@ class RedBayesiana:
         plt.show()
 
         print(f"Variables: {list(self.variables)}")
-        print(f"Número de variables: {len(self.variables)}")
+        print(f"Numero de variables: {len(self.variables)}")
         print("\nRelaciones de dependencia:")
         for padre, hijo in self.grafo.edges():
-            print(f"  {padre} → {hijo}")
+            print(f"  {padre} -> {hijo}")
 
         print("\nResumen por variable:")
         for variable in sorted(self.variables):
@@ -141,7 +141,7 @@ class RedBayesiana:
             df = cpt_info['data']
             padres = cpt_info['padres']
 
-            print(f"\n🔬 {nodo} | Factores: {padres}")
+            print(f"\n {nodo} | Factores: {padres}")
             print(f"Tamaño de CPT: {len(df)} combinaciones")
             if len(df) > 6:
                 print("Muestra de probabilidades:")
@@ -157,13 +157,13 @@ if __name__ == "__main__":
     rb = RedBayesiana()
 
     # 1. Cargar estructura
-    print("\n Cargando estructura del sistema médico...")
+    print("\n Cargando estructura del sistema medico...")
     if not rb.cargar_estructura("estructura_red.csv"):
         print(" Error: No se pudo cargar la estructura. Verifica el archivo 'estructura_red.csv'")
         exit(1)
 
     # 2. Cargar las CPTs
-    print("\n Cargando tablas de probabilidad médica...")
+    print("\n Cargando tablas de probabilidad medica...")
     archivos_cpt = [
         "nodo_edad.csv",
         "nodo_fumador.csv",
@@ -193,9 +193,8 @@ if __name__ == "__main__":
             print(f"   - {archivo} → {' Existe' if os.path.exists(archivo) else ' No existe'}")
         exit(1)
 
-    # 3. Mostrar información completa del sistema
-    print("\n Visualizando la red de diagnóstico...")
+    # 3. Mostrar informacion completa del sistema
+    print("\n Visualizando grafo...")
     rb.mostrar_grafo()
     rb.mostrar_cpts()
-
 

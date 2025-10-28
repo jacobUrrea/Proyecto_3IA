@@ -1,3 +1,7 @@
-valor,probabilidad
-si,0.3
-no,0.7
+Edad,fumador,probabilidad
+joven,si,0.25
+joven,no,0.75
+adulto,si,0.35
+adulto,no,0.65
+mayor,si,0.15
+mayor,no,0.85

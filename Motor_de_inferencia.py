@@ -80,15 +80,19 @@ class RedBayesiana:
         if variable not in self.cpts:
             raise ValueError(f"No hay CPT para {variable}")
 
+        #Obtiene el DataFrame de la CPT
         cpt_info = self.cpts[variable]
         df = cpt_info['data']
 
+        #Si la variable no depende de nadie (por ejemplo Edad o Fumador),
+        #busca directamente en la columna de valores
         if not cpt_info['padres']:
             fila = df[df[cpt_info['columna_valor']] == valor]
             if len(fila) == 0:
                 return 0.0
             return fila.iloc[0]['probabilidad']
-
+        #Si encuentra padres aplica un filtro sobre las filas que coinciden con los valores de los padres
+        #   Si no hay coinsidencias devuelve 0, de lo contrario devuelve la probabilidad
         mascara = pd.Series([True] * len(df))
         for padre in cpt_info['padres']:
             if padre in evidencia_parcial:
@@ -113,47 +117,53 @@ class RedBayesiana:
             if archivo_traza:
                 with open(archivo_traza, 'a', encoding='utf-8') as f:
                     f.write(mensaje + "\n")
-
+        #Guarda o imprime los pasos para auditoria:
         if archivo_traza:
             with open(archivo_traza, 'w', encoding='utf-8') as f:
-                f.write("TRAZA DE INFERENCIA POR ENUMERACION\n")
+                f.write("Traza de inferencia por enumeracion \n")
                 f.write(f"Consulta: P({consulta} | {evidencia})\n")
 
         todas_variables = list(self.variables)
-        log_traza(f"Paso 1 - Variables de la red: {todas_variables}")
+        log_traza(f"1. Variables de la red: {todas_variables}")
 
         variables_ocultas = [v for v in todas_variables if v != consulta and v not in evidencia]
-        log_traza(f"Paso 2 - Variables ocultas (Y): {variables_ocultas}")
+        log_traza(f"2. Variables ocultas (Y): {variables_ocultas}")
         log_traza(f"Consulta (X): {consulta}")
         log_traza(f"Evidencia (e): {evidencia}")
-
+        #Lee los valores posibles desde la CP
         valores_consulta = list(self.cpts[consulta]['data'][self.cpts[consulta]['columna_valor']].unique())
         valores_consulta = [v for v in valores_consulta if pd.notna(v)]
-        log_traza(f"Paso 3 - Valores posibles de {consulta}: {valores_consulta}")
+        log_traza(f"3. Valores posibles de {consulta}: {valores_consulta}")
 
-        log_traza(f"\nPaso 4 - Calculo de probabilidades conjuntas:")
+        log_traza(f"\n 4.Calculo de probabilidades conjuntas:")
         log_traza(f"Formula: P({consulta}, {evidencia}, {variables_ocultas})")
 
         def calcular_probabilidad_conjunta(asignacion_completa):
             probabilidad = 1.0
             explicacion = []
+            #Si falta alguna combinacion devuelve 0
 
+            #Recorre todas las variables del modelo
             for variable in todas_variables:
                 valor = asignacion_completa[variable]
-
+            #Para cada variable, busca el valor asignado (por ejemplo Edad=adulto o Fumador=si) 
+            #Dentro del diccionario asignacion_completa
                 evidencia_padres = {}
                 if variable in self.cpts:
                     for padre in self.cpts[variable]['padres']:
                         if padre in asignacion_completa:
                             evidencia_padres[padre] = asignacion_completa[padre]
+                
+                #Construye un diccionario con los padres de la variable
 
+                #Llama a la funcion anterior para consultar la probabilidad exacta desde el CSV correspondiente.
                 prob_cond = self.obtener_probabilidad(variable, valor, evidencia_padres)
 
                 if prob_cond == 0:
                     return 0.0, []
 
                 probabilidad *= prob_cond
-
+                #Multiplica esa probabilidad con las demas ya acumuladas
                 if self.cpts[variable]['padres']:
                     explicacion.append(f"P({variable}={valor}|{evidencia_padres})={prob_cond:.4f}")
                 else:
@@ -162,14 +172,18 @@ class RedBayesiana:
             return probabilidad, explicacion
 
         def enumerar_combinaciones(variables, asignacion_actual):
+            #Si ya no hay variables ocultas por enumerar, devuelve la asignacion actual
             if not variables:
                 return [asignacion_actual.copy()]
 
             combinaciones = []
+            #Toma la primera variable de la lista y obtiene todos los valores posibles de esa variable desde su CSV
+            #variable_actual = "PresionArterial" valores_variable = ["baja", "media", "alta"]
             variable_actual = variables[0]
             valores_variable = list(self.cpts[variable_actual]['data'][self.cpts[variable_actual]['columna_valor']].unique())
             valores_variable = [v for v in valores_variable if pd.notna(v)]
-
+            #Para cada valor posible asigna ese valor a la variable actual,
+            #llama recursivamente a la funcion con el resto de variables y acumula todas las combinaciones
             for valor in valores_variable:
                 nueva_asignacion = asignacion_actual.copy()
                 nueva_asignacion[variable_actual] = valor
@@ -180,14 +194,14 @@ class RedBayesiana:
         resultados = {}
 
         for valor_consulta in valores_consulta:
-            log_traza(f"\n--- Calculo para {consulta} = {valor_consulta} ---")
+            log_traza(f"\n Calculo para {consulta} = {valor_consulta} ---")
 
             asignacion_base = evidencia.copy()
             asignacion_base[consulta] = valor_consulta
 
             suma_probabilidad = 0.0
             combinaciones_validas = 0
-
+            #Genera todas las combinaciones posibles de valores de las variables ocultas, usando recursion.
             for combinacion in enumerar_combinaciones(variables_ocultas, asignacion_base):
                 prob, explicacion = calcular_probabilidad_conjunta(combinacion)
 
@@ -201,30 +215,31 @@ class RedBayesiana:
             log_traza(f"Suma para {consulta}={valor_consulta}: {suma_probabilidad:.6f}")
             log_traza(f"Combinaciones validas: {combinaciones_validas}")
 
-        log_traza(f"\nPaso 5 - Normalizacion:")
+        log_traza(f"\n5Normalizacion:")
         suma_total = sum(resultados.values())
         log_traza(f"Suma total de probabilidades conjuntas: {suma_total:.6f}")
 
         if suma_total == 0:
-            log_traza("ERROR: Suma total es 0 - evidencia imposible con las CPTs actuales")
+            log_traza("ERROR: Suma total es 0, evidencia imposible con las CPTs actuales")
             return None
 
         alpha = 1.0 / suma_total
         log_traza(f"Factor de normalizacion alpha = 1/{suma_total:.6f} = {alpha:.6f}")
 
         resultados_normalizados = {}
+        #Calcular las probabilidades normalizadas
         for valor, prob in resultados.items():
             prob_normalizada = prob * alpha
             resultados_normalizados[valor] = prob_normalizada
             log_traza(f"P({consulta}={valor}|evidencia) = {prob:.6f} × {alpha:.6f} = {prob_normalizada:.6f}")
 
-        log_traza("RESULTADO FINAL:")
+        log_traza("Resultado final:")
         log_traza(f"P({consulta} | {evidencia}) = {resultados_normalizados}")
 
         return resultados_normalizados
 
 def generar_reporte_validacion(resultados_reales):
-    print("PUNTO 3 - VALIDACION: REPORTE COMPLETO")
+    print("Reporte de Validacion: ")
     # CASO 1
     print("\nCASO DE PRUEBA 1")
     print("Consulta: P(EnfermedadCardiaca | Edad=adulto, Fumador=si, Ejercicio=poco)")
@@ -232,7 +247,7 @@ def generar_reporte_validacion(resultados_reales):
 
     if resultados_reales[0] is not None:
         valor_real_alto = resultados_reales[0].get('alto_riesgo', 0)
-        print(f"Valor esperado (manual): alto_riesgo ≈ 0.41")
+        print(f"Valor esperado (manual): alto_riesgo = 0.41")
         print(f"Valor real (programa): alto_riesgo = {valor_real_alto:.3f}")
     else:
         print("No se pudo calcular")
