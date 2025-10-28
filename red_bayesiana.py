@@ -198,4 +198,3 @@ if __name__ == "__main__":
     rb.mostrar_grafo()
     rb.mostrar_cpts()
 
-
